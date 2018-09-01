@@ -62,3 +62,22 @@ class Counter extends Component {
 ```
 
 This time, it's **3**, because it takes the function each time and execute each of them.
+
+## 2.1 State Patterns and anti-patterns
+
+State should be considered as private data, and generally we don't want it to be modified by the outside components.
+
+An alternative way of creating computed properties is using a getter
+
+```js
+class User extends Component {
+  get fullName() {
+    const { firstName, lastName } = this.props;
+    return `${firstName} ${lastName}`;
+  }
+
+  render() {
+    return <h1>{this.fullName}</h1>;
+  }
+}
+```
