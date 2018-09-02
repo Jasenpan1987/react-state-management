@@ -81,3 +81,36 @@ class User extends Component {
   }
 }
 ```
+
+## 2.2 State Architecture Pattern
+
+### 2.2.1 Container Pattern
+
+It split the components into two categories, the presentational components and the container components. Most of the components are class components because it's eaiser to leverage them to become container components.
+
+The benefit we get from this split is the components are now easier to test.
+
+### 2.2.2 HOC Pattern
+
+```js
+const withCount = WrappedComponent => class extends Component {
+  state = {count: 0}
+  increment = () => {
+    this.setState({
+      ...
+    })
+  }
+
+  render() {
+    return (
+      <WrappedComponent
+        count={this.state.count}
+        increment={this.increment}
+        {...this.props}
+      />
+    )
+  }
+}
+```
+
+The wrapped component will receive the props from outside, as well as the props from the wrapped class state.
