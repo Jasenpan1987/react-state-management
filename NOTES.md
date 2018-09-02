@@ -164,3 +164,37 @@ const Foo = () => (
   />
 )
 ```
+
+# 3. Flux
+
+Flux is the pattern to extract our state data into stores.
+
+```js
+// Action creators
+export const updateNumberOfPeople = value => {
+  AppDispatcher.dispatch({
+    type: "UPDATE_NUMBER_OF_PEOPLE",
+    value
+  });
+};
+
+// Store
+class ItemStore extends EventEmitter {
+  constructor() {
+    super();
+
+    AppDispatcher.register(action => {
+      if (action.type === "UPDATE_NUMBER_OF_PEOPLE") {
+        ...
+      }
+
+      if (action.type === "UPDATE_SLICE_PER_PERSON") {
+        ...
+      }
+    })
+  }
+}
+
+// Dispatcher
+const AppDispatcher = new Dispatcher
+```
