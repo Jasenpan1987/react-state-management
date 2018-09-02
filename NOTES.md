@@ -114,3 +114,53 @@ const withCount = WrappedComponent => class extends Component {
 ```
 
 The wrapped component will receive the props from outside, as well as the props from the wrapped class state.
+
+If we have a state that will be comsumed in multiple places, we can extract it out and create a higher order component.
+
+Notice that we can configure the wrapped component name by
+
+```js
+return class extends Component {
+  ...
+  static displayName = `WithPizzaCalculations(${WrappedComponent.displayName ||
+      WrappedComponent.name})`;
+
+  render() {
+    ...
+  }
+}
+```
+
+so that the output will be `<WithPizzaCalculations(PizzaCalculator)>`.
+
+### 2.2.3 Render Properties Pattern
+
+```js
+export default class WithCount extends Component {
+  state = { count: 0 };
+
+  increment = () => {
+    this.setState({
+      count: this.state.count + 1
+    });
+  };
+
+  render() {
+    return (
+      <div className="WithCount">
+        {this.props.render(this.state.count, this.increment)}
+      </div>
+    );
+  }
+}
+
+// when we using WithCount
+const Foo = () => (
+  <WithCount
+    render={(count, increment) => (
+      <div>{count}</div>
+      <button onClick={increment}>Add</button>
+    )}
+  />
+)
+```
