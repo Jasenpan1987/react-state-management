@@ -198,3 +198,32 @@ class ItemStore extends EventEmitter {
 // Dispatcher
 const AppDispatcher = new Dispatcher
 ```
+
+# 4. Redux
+
+Redux is similar to flux pattern, but with one, immutable state tree. Redux has multiple reducers which takes an action and the current state returns the new state.
+
+Redux is small, it only exposes the following 5 methods:
+
+```js
+import {
+  applyMiddleware,
+  createStore,
+  combineReducers,
+  bindActionCreators,
+  compose
+} from "redux";
+```
+
+```js
+const bindActionCreator = (action, dispatch) => (...args) =>
+  dispatch(action(...args));
+```
+
+```js
+const bindActionCreators = (actions, dispatch) =>
+  Object.keys(actions).reduce((boundActions, key) => {
+    boundActions[key] = bindActionCreator(actions[key], dispatch);
+    return prev;
+  }, {});
+```
